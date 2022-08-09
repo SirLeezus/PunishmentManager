@@ -8,7 +8,9 @@ import lee.code.punishments.lists.Setting;
 import lee.code.punishments.menusystem.PlayerMU;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -59,6 +61,18 @@ public class Data {
             playerMUList.put(uuid, pmu);
             return pmu;
         }
+    }
+
+    public void addSpamDelay(UUID uuid) {
+        if (isSpamTaskActive(uuid)) {
+            Bukkit.getScheduler().cancelTask(getSpamDelayTask(uuid));
+        }
+        addSpamTaskActive(uuid, new BukkitRunnable() {
+            @Override
+            public void run() {
+                removeSpamTaskActive(uuid);
+            }
+        }.runTaskLater(Punishments.getPlugin(), 10).getTaskId());
     }
 
     public void load() {

@@ -12,6 +12,7 @@ public enum Lang {
     ANNOUNCEMENT("&e&lAnnouncement &6➔ &r"),
     USAGE("&6&lUsage: &e{0}"),
     SERVER_UUID("ffffffff-ffff-ffff-ffff-ffffffffffff"),
+    SPAM_COMMAND("&cPlease slow down the speed you're requesting commands."),
     SERVER_RESTART("&aThe server is restarting! Journey Chaos will be back online soon!"),
     MUTED("&cYou have been muted from chat forever for: &7{0}"),
     TEMPMUTED("&cYou have been temporarily muted from chat for &e{0} &cfor: &7{1}"),
