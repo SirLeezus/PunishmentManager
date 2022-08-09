@@ -1,0 +1,40 @@
+name: PunishmentManager
+main: lee.code.punishments.Punishments
+version: ${project.version}
+api-version: 1.19
+author: Lee
+depend: [GoldmanCore]
+commands:
+  ban:
+    description: Bans a player from the server.
+    permission: punishments.command.ban
+    usage: "/ban &f<player> <reason>"
+  tempban:
+    description: Temporarily bans a player from the server.
+    permission: punishments.command.tempban
+    usage: "/tempban &f<player> <time> <reason>"
+  unban:
+    description: Unbans a player that has been banned.
+    permission: punishments.command.unban
+    usage: "/unban &f<player>"
+  punished:
+    description: Lists all the players that are punished.
+    permission: punishments.command.punished
+    aliases: [banlist]
+    usage: "/punished"
+  mute:
+    description: Mutes a player from server chat.
+    permission: punishments.command.mute
+    usage: "/mute &f<player> <reason>"
+  tempmute:
+    description: Temporarily mutes a player from the server chat.
+    permission: punishments.command.tempmute
+    usage: "/tempmute &f<player> <time> <reason>"
+  unmute:
+    description: Unmutes a player from server chat.
+    permission: punishments.command.unmute
+    usage: "/unmute &f<player>"
+  kick:
+    description: Kicks a player from the server.
+    permission: punishments.command.kick
+    usage: "/kick &f<player> <reason>"
