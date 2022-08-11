@@ -35,6 +35,15 @@ public class CacheManager {
             .recordStats()
             .build();
 
+    public void createDefaults(UUID uuid) {
+        if (hasPlayerData(uuid)) {
+            PlayerTable playerTable = Punishments.getPlugin().getDatabaseManager().fetchPlayerTable(uuid);
+            getPlayerCache().put(playerTable.getPlayer(), playerTable);
+        } else {
+            createPlayerData(new PlayerTable(uuid));
+        }
+    }
+
     //server table
     public ServerTable getServerTable() {
         return getServerCache().getIfPresent(serverKey);
@@ -82,10 +91,6 @@ public class CacheManager {
     private void updatePlayerTable(PlayerTable playerTable) {
         getPlayerCache().put(playerTable.getPlayer(), playerTable);
         Punishments.getPlugin().getDatabaseManager().updatePlayerTable(playerTable);
-    }
-
-    public void createDefaultColumn(UUID uuid) {
-        createPlayerData(new PlayerTable(uuid));
     }
 
     public Map<UUID, Long> getPunishList() {

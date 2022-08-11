@@ -11,6 +11,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
@@ -19,14 +20,20 @@ import java.util.UUID;
 public class JoinListener implements Listener {
 
     @EventHandler
-    public void onPlayerPreLogin(PlayerLoginEvent e) {
+    public void onPlayerPreLogin(AsyncPlayerPreLoginEvent e) {
+        try {
+            Punishments.getPlugin().getCacheManager().createDefaults(e.getUniqueId());
+        } catch (NullPointerException exception) {
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Lang.ERROR_COULD_NOT_LOAD_PROFILE.getComponent(null));
+        }
+    }
+
+    @EventHandler
+    public void onPlayerLogin(PlayerLoginEvent e) {
         Punishments plugin = Punishments.getPlugin();
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
         CacheManager cacheManager = plugin.getCacheManager();
-
-        //player data check
-        if (!cacheManager.hasPlayerData(uuid)) cacheManager.createDefaultColumn(uuid);
 
         //ban check
         if (cacheManager.isBanned(uuid)) {

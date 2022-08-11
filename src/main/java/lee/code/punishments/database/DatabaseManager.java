@@ -6,6 +6,8 @@ import lee.code.core.ormlite.jdbc.JdbcConnectionSource;
 import lee.code.core.ormlite.jdbc.db.DatabaseTypeUtils;
 import lee.code.core.ormlite.logger.LogBackendType;
 import lee.code.core.ormlite.logger.LoggerFactory;
+import lee.code.core.ormlite.stmt.PreparedQuery;
+import lee.code.core.ormlite.stmt.QueryBuilder;
 import lee.code.core.ormlite.support.ConnectionSource;
 import lee.code.core.ormlite.table.TableUtils;
 import lee.code.punishments.Punishments;
@@ -17,6 +19,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 public class DatabaseManager {
@@ -28,7 +31,7 @@ public class DatabaseManager {
     private ConnectionSource connectionSource;
 
     private String getDatabaseURL() {
-        return "jdbc:mysql://" + ConfigFile.MYSQL_IP.getString(null) + ":" + ConfigFile.MYSQL_PORT.getString(null) + "/" + ConfigFile.MYSQL_DATABASE.getString(null) + "?useSSL=true";
+        return "jdbc:mysql://" + ConfigFile.MYSQL_IP.getString(null) + ":" + ConfigFile.MYSQL_PORT.getString(null) + "/" + ConfigFile.MYSQL_DATABASE.getString(null) + "?useSSL=true&autoReconnect=true";
     }
 
     public void initialize() {
@@ -62,6 +65,19 @@ public class DatabaseManager {
         //load server data into cache
         for (ServerTable serverTable : serverDao.queryForAll()) cacheManager.setServerData(serverTable);
 
+    }
+
+    public PlayerTable fetchPlayerTable(UUID uuid) {
+        try {
+            QueryBuilder<PlayerTable, UUID> queryBuilder = playerDao.queryBuilder();
+            queryBuilder.where().eq("player", uuid);
+            PreparedQuery<PlayerTable> preparedQuery = queryBuilder.prepare();
+            List<PlayerTable> accountList = playerDao.query(preparedQuery);
+            return accountList.get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void closeConnection() {

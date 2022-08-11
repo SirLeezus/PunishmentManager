@@ -43,6 +43,7 @@ public enum Lang {
     ERROR_LIST_PAGE_NOT_NUMBER("&cThe input &6{0} &cis not a number. &a&lUse&7: &e(1)"),
     ERROR_PLAYER_NOT_FOUND("&cThe player &6{0} &ccould not be found."),
     ERROR_PLAYER_NOT_ONLINE("&cThe player &6{0} &cis not online."),
+    ERROR_COULD_NOT_LOAD_PROFILE("&cCould not load profile."),
 
     ;
 

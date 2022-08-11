@@ -26,6 +26,10 @@ public enum ConfigFile {
         return BukkitUtils.getValueFromFileManager(Punishments.getPlugin().getFileManager(),"config", path);
     }
 
+    public boolean getBoolean() {
+        return Boolean.parseBoolean(BukkitUtils.getStringFromFileManager(Punishments.getPlugin().getFileManager(),"config", path, null));
+    }
+
     public void setValue(int value) {
         BukkitUtils.setValueInFileManager(Punishments.getPlugin().getFileManager(),"config", path, value);
     }
