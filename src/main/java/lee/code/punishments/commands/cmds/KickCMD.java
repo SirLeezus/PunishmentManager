@@ -24,7 +24,7 @@ public class KickCMD implements CommandExecutor {
                 if (!reason.isBlank()) {
                     if (target.isOnline()) {
                         Player tPlayer = target.getPlayer();
-                        if (tPlayer != null) tPlayer.kick(Lang.KICKED.getComponent(new String[] { reason }));
+                        if (tPlayer != null) BukkitUtils.kickNetwork(tPlayer, Lang.KICKED.getString(new String[] { reason }));
                         plugin.getServer().sendMessage(Lang.ANNOUNCEMENT.getComponent(null).append(Lang.BROADCAST_KICKED.getComponent(new String[] { target.getName(), reason })));
                     } else sender.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_PLAYER_NOT_ONLINE.getComponent(new String[] { args[0] })));
                 } else sender.sendMessage(Lang.USAGE.getComponent(new String[] { command.getUsage() }));

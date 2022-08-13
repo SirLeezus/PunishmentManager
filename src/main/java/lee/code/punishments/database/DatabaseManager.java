@@ -45,9 +45,24 @@ public class DatabaseManager {
                     ConfigFile.MYSQL_PASSWORD.getString(null),
                     DatabaseTypeUtils.createDatabaseType(databaseURL));
             createTables();
+            maintainConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void maintainConnection() {
+        Punishments plugin = Punishments.getPlugin();
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            try {
+                QueryBuilder<ServerTable, String> queryBuilder = serverDao.queryBuilder();
+                queryBuilder.where().eq("server", "server");
+                PreparedQuery<ServerTable> preparedQuery = queryBuilder.prepare();
+                serverDao.query(preparedQuery);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }), 0L, 20L * 3600);
     }
 
     private void createTables() throws SQLException {

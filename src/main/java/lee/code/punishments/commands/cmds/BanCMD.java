@@ -32,7 +32,7 @@ public class BanCMD implements CommandExecutor {
                         cacheManager.setBannedPlayer(tUUID, senderUUID, reason, true);
                         if (target.isOnline()) {
                             Player tPlayer = target.getPlayer();
-                            if (tPlayer != null) tPlayer.kick(Lang.BANNED.getComponent(new String[] { reason }));
+                            if (tPlayer != null) BukkitUtils.kickNetwork(tPlayer, Lang.BANNED.getString(new String[] { reason }));
                         }
                         plugin.getServer().sendMessage(Lang.ANNOUNCEMENT.getComponent(null).append(Lang.BROADCAST_BANNED_FOREVER.getComponent(new String[] { target.getName(), reason })));
                     }

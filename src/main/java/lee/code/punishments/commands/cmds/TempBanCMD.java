@@ -37,7 +37,7 @@ public class TempBanCMD implements CommandExecutor {
                             cacheManager.setTempBannedPlayer(tUUID, senderUUID, reason, time);
                             if (target.isOnline()) {
                                 Player tPlayer = target.getPlayer();
-                                if (tPlayer != null) tPlayer.kick(Lang.TEMPBANNED.getComponent(new String[] { BukkitUtils.parseSeconds(secondsBanned), reason }));
+                                if (tPlayer != null) BukkitUtils.kickNetwork(tPlayer, Lang.TEMPBANNED.getString(new String[] { BukkitUtils.parseSeconds(secondsBanned), reason }));
                             }
                             plugin.getServer().sendMessage(Lang.ANNOUNCEMENT.getComponent(null).append(Lang.BROADCAST_TEMPBANNED.getComponent(new String[] { target.getName(), BukkitUtils.parseSeconds(secondsBanned), reason })));
                         }

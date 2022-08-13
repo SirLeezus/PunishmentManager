@@ -1,6 +1,5 @@
 package lee.code.punishments;
 
-import lee.code.core.util.bukkit.BukkitUtils;
 import lee.code.core.util.files.FileManager;
 import lee.code.punishments.commands.cmds.*;
 import lee.code.punishments.commands.tabs.*;
@@ -9,7 +8,6 @@ import lee.code.punishments.database.DatabaseManager;
 import lee.code.punishments.listeners.ChatListener;
 import lee.code.punishments.listeners.CommandListener;
 import lee.code.punishments.listeners.JoinListener;
-import lee.code.punishments.lists.Lang;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,7 +34,6 @@ public class Punishments extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        BukkitUtils.kickOnlinePlayers(Lang.SERVER_RESTART.getComponent(null));
         databaseManager.closeConnection();
     }
 
