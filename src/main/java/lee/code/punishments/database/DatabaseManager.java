@@ -88,7 +88,10 @@ public class DatabaseManager {
             queryBuilder.where().eq("player", uuid);
             PreparedQuery<PlayerTable> preparedQuery = queryBuilder.prepare();
             List<PlayerTable> accountList = playerDao.query(preparedQuery);
-            return accountList.get(0);
+            if (accountList.isEmpty()) {
+                Punishments.getPlugin().getCacheManager().createPlayerData(new PlayerTable(uuid));
+                return null;
+            } else return accountList.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }

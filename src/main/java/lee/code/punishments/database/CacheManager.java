@@ -36,12 +36,8 @@ public class CacheManager {
             .build();
 
     public void createDefaults(UUID uuid) {
-        if (hasPlayerData(uuid)) {
-            PlayerTable playerTable = Punishments.getPlugin().getDatabaseManager().fetchPlayerTable(uuid);
-            getPlayerCache().put(playerTable.getPlayer(), playerTable);
-        } else {
-            createPlayerData(new PlayerTable(uuid));
-        }
+        PlayerTable playerTable = Punishments.getPlugin().getDatabaseManager().fetchPlayerTable(uuid);
+        if (playerTable != null) getPlayerCache().put(playerTable.getPlayer(), playerTable);
     }
 
     //server table
